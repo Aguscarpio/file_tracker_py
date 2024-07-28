@@ -6,6 +6,13 @@ from inotify_simple import INotify, flags
 DATABASE_PATH = 'tracked_files.db'
 TABLE_NAME = 'tracked_files'
 
+if __name__ == '__main__':
+    # This is just an example
+    # It would be reasonable to use $HOME as root in some scenarios
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    monitor_files(root=dir_path)
+
+
 def get_files_to_monitor():
     conn = sqlite3.connect(DATABASE_PATH)
     cursor = conn.cursor()
@@ -60,7 +67,3 @@ def monitor_files(root="/home/"):
                     inode_to_watch.pop(inode, None)
 
         time.sleep(1)
-
-
-if __name__ == '__main__':
-    monitor_files(root="/home/aguscarpio/Codes/")
